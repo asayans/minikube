@@ -20,5 +20,5 @@ spec:
         - containerPort: 9090
         command:
         - --web.enable-remote-write-receiver
-        volumes:
-        - /dev/null:/prometheus/prometheus.yml
+  volumes:
+  - /dev/null:/prometheus/prometheus.yml

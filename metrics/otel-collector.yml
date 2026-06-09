@@ -20,5 +20,5 @@ spec:
         - containerPort: 4317
         command:
         - --config=/etc/otel-collector-config.yaml
-        volumes:
-        - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+  volumes:
+  - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
