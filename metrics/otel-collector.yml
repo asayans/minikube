@@ -18,7 +18,7 @@ data:
           insecure: true
       prometheusremotewrite:
         endpoint: http://prometheus:9090/api/v1/write
-      logging:
+      debug:
         verbosity: detailed
 
     service:
