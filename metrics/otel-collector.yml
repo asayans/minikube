@@ -12,7 +12,7 @@ data:
     processors:
       batch:
     exporters:
-      jaeger:
+      otlp:
         endpoint: jaeger:14250
         tls:
           insecure: true
