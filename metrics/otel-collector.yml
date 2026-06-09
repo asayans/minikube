@@ -1,3 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector-config
+  namespace: metrics
+data:
+  otel-collector-config.yaml: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+    processors:
+      batch:
+    exporters:
+      jaeger:
+        endpoint: jaeger:14250
+        tls:
+          insecure: true
+      prometheusremotewrite:
+        endpoint: http://prometheus:9090/api/v1/write
+      logging:
+        verbosity: detailed
+
+    service:
+      pipelines:
+        traces:
+          receivers: [ otlp ]
+          processors: [ batch ]
+          exporters: [ jaeger ]
+        metrics:
+          receivers: [ otlp ]
+          processors: [ batch ]
+          exporters: [ prometheusremotewrite ]
+        logs:
+          receivers: [ otlp ]
+          processors: [ batch ]
+          exporters: [ logging ]
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +56,13 @@ spec:
         image: otel/opentelemetry-collector-contrib:0.133.0
         ports:
         - containerPort: 4317
-        command:
+        args:
         - --config=/etc/otel-collector-config.yaml
-  volumes:
-  - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+        volumeMounts:
+        - name: otel-collector-config
+          mountPath: /etc/otel-collector-config.yaml
+          subPath: otel-collector-config.yaml
+      volumes:
+      - name: otel-collector-config
+        configMap:
+          name: otel-collector-config
