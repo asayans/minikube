@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: dropwizard-deployment
   namespace: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: dropwizard
   template:
     metadata:
       labels:
-        app: nginx
+        app: dropwizard
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
+      - name: dropwizard
+        image: provok/dropwizard:example
         ports:
         - containerPort: 80

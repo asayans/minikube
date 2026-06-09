@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-collector-deployment
+  namespace: metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      containers:
+      - name: otel-collector
+        image: otel/opentelemetry-collector-contrib:0.133.0
+        ports:
+        - containerPort: 4317
+        command:
+        - --config=/etc/otel-collector-config.yaml
+        volumes:
+        - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
