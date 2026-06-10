@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestion de usuarios</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f6f8;
+        color: #1f2933;
+      }
+
+      body {
+        margin: 0;
+        padding: 32px;
+      }
+
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin: 0 0 24px;
+        font-size: 30px;
+      }
+
+      section {
+        background: #ffffff;
+        border: 1px solid #d9e2ec;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+
+      form.add-user {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: end;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      input {
+        border: 1px solid #bcccdc;
+        border-radius: 6px;
+        font: inherit;
+        padding: 10px 12px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        padding: 11px 14px;
+      }
+
+      button.primary {
+        background: #0b7285;
+        color: #ffffff;
+      }
+
+      button.danger {
+        background: #c92a2a;
+        color: #ffffff;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #d9e2ec;
+        padding: 12px 8px;
+        text-align: left;
+      }
+
+      th:last-child,
+      td:last-child {
+        text-align: right;
+        width: 120px;
+      }
+
+      .empty {
+        color: #52616b;
+        margin: 0;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 18px;
+        }
+
+        form.add-user {
+          grid-template-columns: 1fr;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Gestion de usuarios</h1>
+
+      <section aria-labelledby="add-user-title">
+        <h2 id="add-user-title">Anadir usuario</h2>
+        <form class="add-user" method="post" action="{{ url_for('add_user') }}">
+          <label>
+            Nombre
+            <input name="name" autocomplete="name" required>
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <button class="primary" type="submit">Anadir</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="users-title">
+        <h2 id="users-title">Usuarios</h2>
+        {% if users %}
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>
+                    <form method="post" action="{{ url_for('delete_user', user_id=user.id) }}">
+                      <button class="danger" type="submit">Eliminar</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p class="empty">No hay usuarios todavia.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

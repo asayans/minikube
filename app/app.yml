@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dropwizard-deployment
+  name: simple-flask-app-deployment
   namespace: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dropwizard
+      app: simple-flask-app
   template:
     metadata:
       labels:
-        app: dropwizard
+        app: simple-flask-app
     spec:
       containers:
-      - name: dropwizard
-        image: provok/dropwizard:example
+      - name: simple-flask-app
+        image: simple-flask-app:latest
+        imagePullPolicy: Never
         ports:
-        - containerPort: 80
+        - containerPort: 5000
