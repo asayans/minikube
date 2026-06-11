@@ -29,11 +29,11 @@ data:
       batch:
     exporters:
       otlp:
-        endpoint: jaeger:14250
+        endpoint: http://jaeger.metrics.svc.cluster.local:14250
         tls:
           insecure: true
       prometheusremotewrite:
-        endpoint: http://prometheus:9090/api/v1/write
+        endpoint: http://prometheus.metrics.svc.cluster.local:9090/api/v1/write
       debug:
         verbosity: detailed
 
