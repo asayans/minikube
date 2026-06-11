@@ -29,7 +29,14 @@ spec:
     spec:
       containers:
       - name: simple-flask-app
-        image: simple-flask-app:latest
+        image: simple-flask-app:otel
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: simple-flask-app
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://otel-collector.metrics.svc.cluster.local:4317
+        - name: OTEL_EXPORTER_OTLP_INSECURE
+          value: "true"

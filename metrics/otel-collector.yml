@@ -24,6 +24,7 @@ data:
       otlp:
         protocols:
           grpc:
+            endpoint: 0.0.0.0:4317
     processors:
       batch:
     exporters:
@@ -70,7 +71,8 @@ spec:
       - name: otel-collector
         image: otel/opentelemetry-collector-contrib:0.133.0
         ports:
-        - containerPort: 4317
+        - name: otlp-grpc
+          containerPort: 4317
         args:
         - --config=/etc/otel-collector-config.yaml
         volumeMounts:

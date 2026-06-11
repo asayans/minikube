@@ -13,6 +13,10 @@ COPY templates ./templates
 
 RUN mkdir -p /data
 
+# Install OpenTelemetry
+RUN pip install opentelemetry-distro opentelemetry-exporter-otlp
+RUN opentelemetry-bootstrap -a install
+
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["opentelemetry-instrument", "gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
