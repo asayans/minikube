@@ -11,7 +11,6 @@ spec:
   - name: otlp-grpc
     port: 4317
     targetPort: 4317
-    nodePort: 30317
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -29,7 +28,7 @@ data:
       batch:
     exporters:
       otlp:
-        endpoint: http://jaeger.metrics.svc.cluster.local:14250
+        endpoint: jaeger.metrics.svc.cluster.local:14250
         tls:
           insecure: true
       prometheusremotewrite:

@@ -33,7 +33,6 @@ spec:
   - name: ui
     port: 16686
     targetPort: 16686
-    nodePort: 30686
   - name: otlp-grpc
     port: 14250
     targetPort: 14250
