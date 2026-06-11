@@ -28,7 +28,7 @@ data:
       batch:
     exporters:
       otlp:
-        endpoint: jaeger.metrics.svc.cluster.local:14250
+        endpoint: jaeger.metrics.svc.cluster.local:4317
         tls:
           insecure: true
       prometheusremotewrite:
